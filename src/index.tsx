@@ -1,64 +1,61 @@
-import Select from "react-select";
-import { createRoot } from 'react-dom/client';
-import { useForm, Controller } from "react-hook-form";
-import { Input } from '@mui/material';
-import { Input as AntdInput } from "antd";
+import React from "react";
+import * as ReactDOM from "react-dom/client";
+// import createRoot from "react-dom/client";
 
-import "./styles.css";
-
-interface IFormInput {
-  firstName: string;
-  lastName: string;
-  iceCreamType: { label: string; value: string };
+export class Square extends React.Component {
+  render() {
+    return <button className="square">{/* TODO */}</button>;
+  }
 }
 
-const App = () => {
-  const { control, handleSubmit } = useForm<IFormInput>();
+class Board extends React.Component {
+  renderSquare(i: any) {
+    return <Square />;
+  }
 
-  const onSubmit = (data: IFormInput) => {
-    console.log(data);
-  };
+  render() {
+    const status = "Next player: X";
 
-  return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <label>First Name</label>
-      <Controller
-        render={({ field }) => <Input {...field} className="materialUIInput" />}
-        name="firstName"
-        control={control}
-        defaultValue="hayato"
-      />
-      <label>First Name</label>
-      <Controller
-        render={({ field }) => <AntdInput {...field} />}
-        name="lastName"
-        control={control}
-        defaultValue="maeda"
-      />
-      <label>Ice Cream Preference</label>
-      <Controller
-        control={control}
-        name="iceCreamType"
-        render={({ field }) => (
-          <Select
-            onChange={field.onChange}
-            onBlur={field.onBlur}
-            name={field.name}
-            value={field.value}
-            ref={field.ref} 
-            options={[
-              { value: "chocolate", label: "Chocolate" },
-              { value: "strawberry", label: "Strawberry" },
-              { value: "vanilla", label: "Vanilla" }
-            ]}
-          />
-        )}
-      />
-      <input type="submit" />
-    </form>
-  );
-};
+    return (
+      <div>
+        <div className="status">{status}</div>
+        <div className="board-row">
+          {this.renderSquare(0)}
+          {this.renderSquare(1)}
+          {this.renderSquare(2)}
+        </div>
+        <div className="board-row">
+          {this.renderSquare(3)}
+          {this.renderSquare(4)}
+          {this.renderSquare(5)}
+        </div>
+        <div className="board-row">
+          {this.renderSquare(6)}
+          {this.renderSquare(7)}
+          {this.renderSquare(8)}
+        </div>
+      </div>
+    );
+  }
+}
 
-const container = document.getElementById('root');
- const root = createRoot(container!);
- root.render(<App />);
+class Game extends React.Component {
+  render() {
+    return (
+      <div className="game">
+        <div className="game-board">
+          <Board />
+        </div>
+        <div className="game-info">
+          <div>{/* status */}</div>
+          <ol>{/* TODO */}</ol>
+        </div>
+      </div>
+    );
+  }
+}
+
+// ========================================
+
+const root = ReactDOM.createRoot(document.getElementById("root")!);
+root.render(<Game />);
