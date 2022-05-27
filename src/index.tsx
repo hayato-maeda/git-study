@@ -16,7 +16,7 @@ const App = () => {
   const { control, handleSubmit } = useForm<IFormInput>();
 
   const onSubmit = (data: IFormInput) => {
-    alert(JSON.stringify(data));
+    console.log(data);
   };
 
   return (
@@ -26,21 +26,26 @@ const App = () => {
         render={({ field }) => <Input {...field} className="materialUIInput" />}
         name="firstName"
         control={control}
-        defaultValue=""
+        defaultValue="hayato"
       />
       <label>First Name</label>
       <Controller
         render={({ field }) => <AntdInput {...field} />}
         name="lastName"
         control={control}
-        defaultValue=""
+        defaultValue="maeda"
       />
       <label>Ice Cream Preference</label>
       <Controller
+        control={control}
         name="iceCreamType"
         render={({ field }) => (
           <Select
-            {...field}
+            onChange={field.onChange}
+            onBlur={field.onBlur}
+            name={field.name}
+            value={field.value}
+            ref={field.ref} 
             options={[
               { value: "chocolate", label: "Chocolate" },
               { value: "strawberry", label: "Strawberry" },
@@ -48,9 +53,7 @@ const App = () => {
             ]}
           />
         )}
-        control={control}
       />
-
       <input type="submit" />
     </form>
   );
