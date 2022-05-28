@@ -1,20 +1,27 @@
 import React from "react";
 import * as ReactDOM from "react-dom/client";
-// import createRoot from "react-dom/client";
 
-export class Square extends React.Component {
+type SquareProps = {
+  value: number;
+};
+
+export class Square extends React.Component<SquareProps> {
   render() {
-    return <button className="square">{/* TODO */}</button>;
+    return (
+      <button className="square">
+        {this.props.value}
+      </button>
+    );
   }
 }
 
-class Board extends React.Component {
-  renderSquare(i: any) {
-    return <Square />;
+export class Board extends React.Component {
+  renderSquare(i: number) {
+    return <Square value={i} />;
   }
 
   render() {
-    const status = "Next player: X";
+    const status = 'Next player: X';
 
     return (
       <div>
